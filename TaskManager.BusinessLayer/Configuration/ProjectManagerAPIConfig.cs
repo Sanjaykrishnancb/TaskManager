@@ -7,7 +7,7 @@ using System.Web.Http.Cors;
 
 namespace TaskManager.Service.Configuration
 {
-    public static class TaskManagerAPIConfig
+    public static class ProjectManagerAPIConfig
     {
         public static void Register(HttpConfiguration config)
         {

@@ -7,7 +7,7 @@ using System.Web.Http;
 
 namespace TaskManager.Service.Controllers
 {
-    public class TaskController : ApiController
+    public class ProjectController : ApiController
     {
         public string Get()
         {

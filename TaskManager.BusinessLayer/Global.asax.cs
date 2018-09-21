@@ -14,7 +14,7 @@ namespace TaskManager.Service
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            GlobalConfiguration.Configure(TaskManagerAPIConfig.Register);
+            GlobalConfiguration.Configure(ProjectManagerAPIConfig.Register);
         }
 
         protected void Session_Start(object sender, EventArgs e)

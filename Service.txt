@@ -1,0 +1,4 @@
+To Enable CORS:
+ var cors = new EnableCorsAttribute("http://localhost:4200", "*", "*");
+ config.EnableCors(cors);
+

@@ -8,7 +8,7 @@ export class ApiService {
 base_url="http://localhost:55602/api"
   constructor(private  httpClient:  HttpClient) { }
   getContacts(){
-    return  this.httpClient.get(`${this.base_url}/Task`);
+    return  this.httpClient.get(`${this.base_url}/Project`);
 }
 
 
