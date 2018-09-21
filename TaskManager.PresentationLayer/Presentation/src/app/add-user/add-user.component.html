@@ -1,0 +1,34 @@
+<div class="container">
+  <form #addUserForm="ngForm">
+    <!-- {{diagnostic}} -->
+    <div class="form_group">
+  <label for="firstName">First Name:</label>
+  <input name="firstName" class="form-control" type="text" [(ngModel)]="addUserModel.firstName" required #firstName="ngModel">
+  <div [hidden]="firstName.valid || firstName.pristine"
+     class="alert alert-danger">
+     First Name is required
+</div>
+</div>
+  <br/>
+  <div class="form_group">
+  <label for="lastName">Last Name:</label>
+  <input name="lastName" class="form-control" type="text" [(ngModel)]="addUserModel.lastName" required #lastName="ngModel">
+  <div [hidden]="lastName.valid || lastName.pristine"
+     class="alert alert-danger">
+     Last Name is required
+</div>
+</div>
+  <br/>
+  <div class="form_group">
+  <label for="employeeID">Employee ID:</label>
+  <input name="employeeID" class="form-control" type="text" [(ngModel)]="addUserModel.employeeId" required #employeeID="ngModel">
+  <div [hidden]="employeeID.valid || employeeID.pristine"
+     class="alert alert-danger">
+     Employee ID is required
+</div>
+</div>
+<br/>
+<button type="submit" class="btn btn-success">Submit</button>
+
+</form>
+</div>
