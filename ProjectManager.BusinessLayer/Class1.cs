@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskManger.DataAccessLayer
+namespace ProjectManager.BusinessLayer
 {
     public class Class1
     {

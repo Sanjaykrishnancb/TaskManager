@@ -5,11 +5,11 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace TaskManager.Service.Controllers
+namespace ProjectManager.Service.Controllers
 {
     public class ProjectController : ApiController
     {
-        public string Get()
+        public string GET()
         {
             return "Hi";
         }
