@@ -1,9 +1,9 @@
 <div class="container">
-  <form #addUserForm="ngForm">
+  <form #addUserForm="ngForm" (ngSubmit)="onSubmit()">
     <!-- {{diagnostic}} -->
     <div class="form_group">
   <label for="firstName">First Name:</label>
-  <input name="firstName" class="form-control" type="text" [(ngModel)]="addUserModel.firstName" required #firstName="ngModel">
+  <input name="firstName" class="form-control" type="text" [(ngModel)]="addUserModel.First_Name" required #firstName="ngModel">
   <div [hidden]="firstName.valid || firstName.pristine"
      class="alert alert-danger">
      First Name is required
@@ -12,7 +12,7 @@
   <br/>
   <div class="form_group">
   <label for="lastName">Last Name:</label>
-  <input name="lastName" class="form-control" type="text" [(ngModel)]="addUserModel.lastName" required #lastName="ngModel">
+  <input name="lastName" class="form-control" type="text" [(ngModel)]="addUserModel.Last_Name" required #lastName="ngModel">
   <div [hidden]="lastName.valid || lastName.pristine"
      class="alert alert-danger">
      Last Name is required
@@ -21,14 +21,41 @@
   <br/>
   <div class="form_group">
   <label for="employeeID">Employee ID:</label>
-  <input name="employeeID" class="form-control" type="text" [(ngModel)]="addUserModel.employeeId" required #employeeID="ngModel">
+  <input name="employeeID" class="form-control" type="text" [(ngModel)]="addUserModel.Employee_ID" required #employeeID="ngModel">
   <div [hidden]="employeeID.valid || employeeID.pristine"
      class="alert alert-danger">
      Employee ID is required
 </div>
 </div>
 <br/>
-<button type="submit" class="btn btn-success">Submit</button>
+<button type="submit" (click)="onSubmit();addUserForm.reset();" [disabled]="!firstName.valid || !lastName.valid || !employeeID.valid" class="btn btn-success">Add</button>
+<button (click)="addUserForm.reset();" style="margin-left: 2%" class="btn btn-primary">Reset</button>
 
 </form>
+<hr style="border-top: 1px solid #333;"/>
+
+<div>
+<input type="text" class="form-control" style="display: inline; width: 20%" placeholder="Search...">
+<b style="display: inline; margin-left: 2%; width: 10%">Sort:</b>
+<button class="form-control overFlow" style="display: inline;margin-left: 2%; width: 15%">First Name</button>
+<button class="form-control overFlow" style="display: inline;margin-left: 2%; width: 15%">Last Name</button>
+<button class="form-control overFlow" style="display: inline;margin-left: 2%; width: 15%">Id</button>
+</div>
+
+<div *ngFor ="let user of UserModel">
+
+<hr style="border-top: dotted 1px;" />
+<div>
+<label class="form-control"  style="display: inline;">{{user.First_Name}}</label>
+<button class="form-control" style="display: inline;margin-left: 2%; width: 20%">Edit</button>
+</div>
+<div>
+<label class="form-control" style="display: inline;">{{user.Last_Name}}</label>
+<button class="form-control" style="display: inline;margin-left: 2%;  width: 20%">Delete</button>
+</div>
+<div>
+<label class="form-control" style="display: inline; width: 20%">{{user.Employee_ID}}</label>
+</div>
+</div>
+
 </div>

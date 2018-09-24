@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectManager.BusinessLayer
+namespace CommonEntities
 {
     public class Class1
     {
