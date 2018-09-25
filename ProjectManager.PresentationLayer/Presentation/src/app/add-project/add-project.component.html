@@ -1,5 +1,5 @@
 <div class="container">
-  <form #addProjectForm="ngForm" style="margin-left: 10%;margin-right: 10%">
+  <form #addProjectForm="ngForm">
     <!-- <form #addUserForm="ngForm" (ngSubmit)="onSubmit()"> -->
     <!-- {{diagnostic}} -->
     <div class="form_group">
@@ -11,7 +11,7 @@
     </div>
     <br/>
     <div class="form_group">      
-      <input type="checkbox" name="setDate" style="width: 5%; height: 20px;" [(ngModel)]="isSetDateEnabled">
+      <input type="checkbox" (click)="toggleSetDate()" name="setDate" style="width: 5%; height: 20px;" [(ngModel)]="isSetDateEnabled">
       <label for="setDate">Set Start and End Date</label>
       <input type="date" class="form-control" name="startDate" style="display: inline; width: 30%;margin-left: 5px" [disabled]="!isSetDateEnabled" [(ngModel)]="addProjectModel.Start_Date"
         #startDate="ngModel">
@@ -41,15 +41,15 @@
     <br/>
 
     <div class="form_group">
-      <label for="manager">Manager:</label>
-      <input name="manager" class="form-control" type="text" [(ngModel)]="managerData" required #manager="ngModel">
-      <button>Search</button>
+      <label for="manager" style="display: inline;width: 10%">Manager:</label>
+      <input name="manager" style="display: inline; margin-left: 2%; width: 40%" class="form-control" type="text" [(ngModel)]="managerData" required #manager="ngModel">
+      <button class="form-control" style="display: inline; margin-left: 2%; width: 10%">Search</button>
       <div [hidden]="manager.valid || manager.pristine || !isSetDateEnabled" class="alert alert-danger">
         Manager is required
       </div>
 
     </div>
-
+<br>
     <button type="submit" (click)="onSubmit();addProjectForm.reset();" [disabled]="!projectName.valid || !startDate.valid || !endDate.valid || !manager.valid"
       class="btn btn-success" [value]="addProjectModel.Project_ID == ''?'Add':'Update'">{{!isUpdate ?'Add':'Update'}}</button>
     <button (click)="addProjectForm.reset();isUpdate=false;" style="margin-left: 2%" class="btn btn-primary">Reset</button> 

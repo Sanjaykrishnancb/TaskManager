@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AddProjectModel } from '../models/add-project.model';
 import { ApiService } from '../api.service';
+import {formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-add-project',
@@ -15,11 +16,12 @@ export class AddProjectComponent implements OnInit {
   isUpdate: boolean;
   isSetDateEnabled: boolean;
   managerData:string;
+  tmpDate:Date;
   constructor(private apiService: ApiService) {
     this.addProjectModel = new AddProjectModel();
 
     this.isUpdate = false;
-    this.isSetDateEnabled = true;
+    this.isSetDateEnabled = false;
   }
 
   ngOnInit() {
@@ -27,6 +29,17 @@ export class AddProjectComponent implements OnInit {
     this.getProjects();
     this.addProjectModel.Priority = 0;
   }
+
+public toggleSetDate(){
+  debugger;
+  this.isSetDateEnabled = this.isSetDateEnabled?false:true;
+  if(this.isSetDateEnabled){
+    this.addProjectModel.Start_Date = new Date();
+     this.tmpDate  = new Date();
+     this.tmpDate.setDate(this.tmpDate.getDate()+1);
+     this.addProjectModel.End_Time = this.tmpDate;
+  }
+}
 
   public getProjects() {
     this.apiService.getProjects().subscribe((data: AddProjectModel[]) => {
