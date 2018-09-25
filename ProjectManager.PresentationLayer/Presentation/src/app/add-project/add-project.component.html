@@ -1,3 +1,88 @@
-<p>
-  add-project works!
-</p>
+<div class="container">
+  <form #addProjectForm="ngForm" style="margin-left: 10%;margin-right: 10%">
+    <!-- <form #addUserForm="ngForm" (ngSubmit)="onSubmit()"> -->
+    <!-- {{diagnostic}} -->
+    <div class="form_group">
+      <label for="projectName">Project :</label>
+      <input name="projectName" class="form-control" type="text" [(ngModel)]="addProjectModel.Project" required #projectName="ngModel">
+      <div [hidden]="projectName.valid || projectName.pristine" class="alert alert-danger">
+        Project Name is required
+      </div>
+    </div>
+    <br/>
+    <div class="form_group">      
+      <input type="checkbox" name="setDate" style="width: 5%; height: 20px;" [(ngModel)]="isSetDateEnabled">
+      <label for="setDate">Set Start and End Date</label>
+      <input type="date" class="form-control" name="startDate" style="display: inline; width: 30%;margin-left: 5px" [disabled]="!isSetDateEnabled" [(ngModel)]="addProjectModel.Start_Date"
+        #startDate="ngModel">
+      <input type="date" class="form-control" name="endDate" style="display: inline; width: 30%;margin-left: 5px" [disabled]="!isSetDateEnabled" [(ngModel)]="addProjectModel.End_Time"
+        #endDate="ngModel">
+      <div [hidden]="startDate.valid || startDate.pristine || !isSetDateEnabled" class="alert alert-danger">
+        Start Date is required
+      </div>
+      <div [hidden]="endDate.valid || endDate.pristine || !isSetDateEnabled" class="alert alert-danger">
+        End Date is required
+      </div>
+    </div>
+     <br/>
+    <div class="form_group">
+      <label for="priority">Priority:</label>
+      <input name="priority" type="range" class="form-control" min="0" max="30"  [(ngModel)]="addProjectModel.Priority" required #priority="ngModel">
+      <p>Value:
+        <span>{{addProjectModel.Priority}}</span>
+      </p>
+      <!-- <div class="slidecontainer">
+        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
+        <p>Value: <span id="demo"></span></p>
+      </div>  -->
+
+
+    </div>
+    <br/>
+
+    <div class="form_group">
+      <label for="manager">Manager:</label>
+      <input name="manager" class="form-control" type="text" [(ngModel)]="managerData" required #manager="ngModel">
+      <button>Search</button>
+      <div [hidden]="manager.valid || manager.pristine || !isSetDateEnabled" class="alert alert-danger">
+        Manager is required
+      </div>
+
+    </div>
+
+    <button type="submit" (click)="onSubmit();addProjectForm.reset();" [disabled]="!projectName.valid || !startDate.valid || !endDate.valid || !manager.valid"
+      class="btn btn-success" [value]="addProjectModel.Project_ID == ''?'Add':'Update'">{{!isUpdate ?'Add':'Update'}}</button>
+    <button (click)="addProjectForm.reset();isUpdate=false;" style="margin-left: 2%" class="btn btn-primary">Reset</button> 
+
+  </form>
+  <hr style="border-top: 1px solid #333;" />
+
+  <!-- <div>
+  <input type="text" class="form-control" [(ngModel)]="searchText" style="display: inline; width: 20%" placeholder="Search...">
+  <b style="display: inline; margin-left: 2%; width: 10%">Sort:</b>
+  <button class="form-control overFlow" style="display: inline;margin-left: 2%; width: 15%">First Name</button>
+  <button class="form-control overFlow" style="display: inline;margin-left: 2%; width: 15%">Last Name</button>
+  <button class="form-control overFlow" style="display: inline;margin-left: 2%; width: 15%">Id</button>
+  </div>
+  
+  <div *ngFor ="let user of UserModel | filter : searchText">
+  
+  <hr style="border-top: dotted 1px;" />
+  <div>
+  <label class="form-control"  style="display: inline;">{{user.First_Name}}</label>
+  <button class="form-control" (click)="editUser(user)" style="display: inline;margin-left: 2%; width: 20%">Edit</button>
+  </div>
+  <div>
+  <label class="form-control" style="display: inline;">{{user.Last_Name}}</label>
+  <button class="form-control" (click)="deleteUser(user)" style="display: inline;margin-left: 2%;  width: 20%">Delete</button>
+  </div>
+  <div>
+  <label class="form-control" style="display: inline; width: 20%">{{user.Employee_ID}}</label>
+  </div>
+  </div>
+  
+  <div *ngIf="usersListCount==0">
+    <label>There are no users</label>
+  </div> -->
+
+</div>

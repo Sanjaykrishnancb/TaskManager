@@ -31,3 +31,11 @@ Service:
 import { HttpClientModule } from  '@angular/common/http';
 ng g service api
 
+
+Header,content and Layout:
+
+ng generate module ui --module app.module
+
+ng generate component ui/layout
+ng generate component ui/header
+ng generate component ui/footer

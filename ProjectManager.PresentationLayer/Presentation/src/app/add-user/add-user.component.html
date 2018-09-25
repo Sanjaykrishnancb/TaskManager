@@ -1,5 +1,6 @@
 <div class="container">
-  <form #addUserForm="ngForm" (ngSubmit)="onSubmit()">
+  <form #addUserForm="ngForm">
+      <!-- <form #addUserForm="ngForm" (ngSubmit)="onSubmit()"> -->
     <!-- {{diagnostic}} -->
     <div class="form_group">
   <label for="firstName">First Name:</label>
@@ -28,34 +29,38 @@
 </div>
 </div>
 <br/>
-<button type="submit" (click)="onSubmit();addUserForm.reset();" [disabled]="!firstName.valid || !lastName.valid || !employeeID.valid" class="btn btn-success">Add</button>
-<button (click)="addUserForm.reset();" style="margin-left: 2%" class="btn btn-primary">Reset</button>
+<button type="submit" (click)="onSubmit();addUserForm.reset();" [disabled]="!firstName.valid || !lastName.valid || !employeeID.valid" class="btn btn-success" [value]="addUserModel.User_ID == ''?'Add':'Update'">{{!isUpdate ?'Add':'Update'}}</button>
+<button (click)="addUserForm.reset();isUpdate=false;" style="margin-left: 2%" class="btn btn-primary">Reset</button>
 
 </form>
 <hr style="border-top: 1px solid #333;"/>
 
 <div>
-<input type="text" class="form-control" style="display: inline; width: 20%" placeholder="Search...">
+<input type="text" class="form-control" [(ngModel)]="searchText" style="display: inline; width: 20%" placeholder="Search...">
 <b style="display: inline; margin-left: 2%; width: 10%">Sort:</b>
 <button class="form-control overFlow" style="display: inline;margin-left: 2%; width: 15%">First Name</button>
 <button class="form-control overFlow" style="display: inline;margin-left: 2%; width: 15%">Last Name</button>
 <button class="form-control overFlow" style="display: inline;margin-left: 2%; width: 15%">Id</button>
 </div>
 
-<div *ngFor ="let user of UserModel">
+<div *ngFor ="let user of UserModel | filter : searchText">
 
 <hr style="border-top: dotted 1px;" />
 <div>
 <label class="form-control"  style="display: inline;">{{user.First_Name}}</label>
-<button class="form-control" style="display: inline;margin-left: 2%; width: 20%">Edit</button>
+<button class="form-control" (click)="editUser(user)" style="display: inline;margin-left: 2%; width: 20%">Edit</button>
 </div>
 <div>
 <label class="form-control" style="display: inline;">{{user.Last_Name}}</label>
-<button class="form-control" style="display: inline;margin-left: 2%;  width: 20%">Delete</button>
+<button class="form-control" (click)="deleteUser(user)" style="display: inline;margin-left: 2%;  width: 20%">Delete</button>
 </div>
 <div>
 <label class="form-control" style="display: inline; width: 20%">{{user.Employee_ID}}</label>
 </div>
+</div>
+
+<div *ngIf="usersListCount==0">
+  <label>There are no users</label>
 </div>
 
 </div>

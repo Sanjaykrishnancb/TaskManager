@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from  '@angular/common/http';
+import { FilterPipe} from './filter.pipe';
 
 const routes: Routes = [
   { path: 'AddProject', component: AddProjectComponent },
@@ -26,7 +27,8 @@ const routes: Routes = [
     AddProjectComponent,
     AddTaskComponent,
     AddUserComponent,
-    ViewTaskComponent
+    ViewTaskComponent,
+    FilterPipe
   ],
   exports: [ RouterModule ],
   imports: [

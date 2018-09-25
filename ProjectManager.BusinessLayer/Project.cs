@@ -2,6 +2,7 @@
 using ProjectManager.DataAccessLayer;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,20 +16,37 @@ namespace ProjectManager.BusinessLayer
 
         }
 
-        public bool AddUser(UsersModel user)
+        public bool AddProject(ProjectModel project)
         {
             using (ProjectManagerEntities dbContext = new ProjectManagerEntities())
             {
-                Users_Table userData = new Users_Table()
-                {
-                    Employee_ID = user.Employee_ID,
-                    First_Name = user.First_Name,
-                    Last_Name = user.Last_Name
-                };
                 try
                 {
-                    dbContext.Users_Table.Add(userData);
-                    dbContext.SaveChanges();
+                    if (project.Project_ID == 0)
+                    {
+                        Project_Table projectData = new Project_Table()
+                        {
+                            Project=project.Project,
+                            Start_Date=project.Start_Date,
+                            End_Time=project.End_Time,
+                            Priority=project.Priority
+                        };
+
+                        dbContext.Project_Table.Add(projectData);
+                        dbContext.SaveChanges();
+                    }
+                    else
+                    {
+                        var projectData = dbContext.Project_Table.Where(c => c.Project_ID == project.Project_ID).First();
+                        if (projectData != null)
+                        {
+                            projectData.Project = project.Project;
+                            projectData.Start_Date = project.Start_Date;
+                            projectData.End_Time= project.End_Time;
+                            projectData.Priority= project.Priority;
+                            dbContext.SaveChanges();
+                        }
+                    }
                 }
                 catch (Exception e)
                 {
@@ -39,22 +57,41 @@ namespace ProjectManager.BusinessLayer
 
         }
 
-        public List<UsersModel> GetUsers()
+        public List<ProjectModel> GetProject()
         {
             using (ProjectManagerEntities dbContext = new ProjectManagerEntities())
             {
-                List<UsersModel> users;
+                List<ProjectModel> projects;
                 try
                 {
-                    users = dbContext.Users_Table.Select(c=>new UsersModel { User_ID=c.User_ID, First_Name=c.First_Name,Last_Name=c.Last_Name,Employee_ID=c.Employee_ID }).ToList();
+                    projects = dbContext.Project_Table.Select(c => new ProjectModel { Project_ID = c.Project_ID, Start_Date = c.Start_Date, End_Time = c.End_Time, Priority=c.Priority,Project=c.Project }).ToList();
                 }
                 catch (Exception e)
                 {
-                    return new List<UsersModel>();
+                    return new List<ProjectModel>();
                 }
-                return users;
+                return projects;
             }
 
+        }
+
+        public bool DeleteProject(ProjectModel project)
+        {
+            using (ProjectManagerEntities dbContext = new ProjectManagerEntities())
+            {
+                try
+                {
+                    var projectData = new Project_Table { Project_ID=project.Project_ID };
+                    dbContext.Entry(projectData).State = EntityState.Deleted;
+                    dbContext.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    return false;
+                }
+                return true;
+            }
+            
         }
     }
 }

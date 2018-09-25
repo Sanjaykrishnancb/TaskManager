@@ -17,18 +17,25 @@ namespace ProjectManager.Service.Controllers
         {
             p1 = new Project();
         }
-        [Route("GetUsers")]
+        [Route("GetProjects")]
         [HttpGet]
-        public List<UsersModel> GetUsers()
+        public List<ProjectModel> GetProject()
         {
-            return p1.GetUsers();
+            return p1.GetProject();
         }
 
-        [Route("AddUser")]
+        [Route("AddProject")]
         [HttpPost]
-        public bool AddUser(UsersModel user)
+        public bool AddProject(ProjectModel project)
         {            
-            return p1.AddUser(user);            
+            return p1.AddProject(project);            
+        }
+
+        [Route("DeleteProject")]
+        [HttpPost]
+        public bool DeleteProject(ProjectModel project)
+        {
+            return p1.DeleteProject(project);
         }
     }
 }

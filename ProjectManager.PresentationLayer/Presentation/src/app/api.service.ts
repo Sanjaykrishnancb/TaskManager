@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders} from  '@angular/common/http';
 import { AddUserModel } from './models/add-user.model';
 import { observable, Observable, of } from '../../node_modules/rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
+import { AddProjectModel } from './models/add-project.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,14 +15,42 @@ httpOptions = {
 };
   constructor(private  httpClient:  HttpClient) { }
   getUsers():Observable<AddUserModel[]>{
-    return  this.httpClient.get<AddUserModel[]>(`${this.base_url}/Project/GetUsers`);
+    return  this.httpClient.get<AddUserModel[]>(`${this.base_url}/User/GetUsers`);
 }
 
 addUser (addUserModel:AddUserModel): Observable<boolean> {
   
-  return this.httpClient.post<boolean>(`${this.base_url}/Project/AddUser`,JSON.stringify(addUserModel), this.httpOptions).pipe(
+  return this.httpClient.post<boolean>(`${this.base_url}/User/AddUser`,JSON.stringify(addUserModel), this.httpOptions).pipe(
     tap((isAdded: boolean) => console.log(`added user : ${isAdded}`)),
     catchError(this.handleError<boolean>('addUser'))
+  );
+}
+
+deleteUser (addUserModel:AddUserModel): Observable<boolean> {
+  
+  return this.httpClient.post<boolean>(`${this.base_url}/User/DeleteUser`,JSON.stringify(addUserModel), this.httpOptions).pipe(
+    tap((isAdded: boolean) => console.log(`deleted user : ${isAdded}`)),
+    catchError(this.handleError<boolean>('DeleteUser'))
+  );
+}
+
+getProjects():Observable<AddProjectModel[]>{
+  return  this.httpClient.get<AddProjectModel[]>(`${this.base_url}/Project/GetProjects`);
+}
+
+addProject (addProjectModel:AddProjectModel): Observable<boolean> {
+  
+  return this.httpClient.post<boolean>(`${this.base_url}/Project/AddProject`,JSON.stringify(addProjectModel), this.httpOptions).pipe(
+    tap((isAdded: boolean) => console.log(`added project : ${isAdded}`)),
+    catchError(this.handleError<boolean>('addProject'))
+  );
+}
+
+deleteProject (addProjectModel:AddProjectModel): Observable<boolean> {
+  
+  return this.httpClient.post<boolean>(`${this.base_url}/Project/DeleteUser`,JSON.stringify(addProjectModel), this.httpOptions).pipe(
+    tap((isAdded: boolean) => console.log(`deleted project : ${isAdded}`)),
+    catchError(this.handleError<boolean>('DeleteProject'))
   );
 }
 
