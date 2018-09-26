@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { AddProjectModel } from '../models/add-project.model';
 import { ApiService } from '../api.service';
-import {formatDate } from '@angular/common';
+import {MatButtonModule, MatCheckboxModule,MatDatepicker} from '@angular/material';
+import * as moment from 'moment';
+import {MatDialog, MAT_DIALOG_DATA} from '@angular/material';
+import { MatDialogRef,MatTableDataSource } from "@angular/material";
+import { AddUserModel } from '../models/add-user.model';
+
 
 @Component({
   selector: 'app-add-project',
@@ -17,7 +22,8 @@ export class AddProjectComponent implements OnInit {
   isSetDateEnabled: boolean;
   managerData:string;
   tmpDate:Date;
-  constructor(private apiService: ApiService) {
+  dialogRef:any;
+  constructor(private apiService: ApiService,public dialog: MatDialog) {
     this.addProjectModel = new AddProjectModel();
 
     this.isUpdate = false;
@@ -30,8 +36,24 @@ export class AddProjectComponent implements OnInit {
     this.addProjectModel.Priority = 0;
   }
 
+  openDialog() {
+
+      this.apiService.getUsers().subscribe((data:AddUserModel[])=>{
+        debugger;
+        this.dialogRef = this.dialog.open(ManagerUserListDialog, {      
+          data: data
+        });
+        this.dialogRef.afterClosed().subscribe(result => {
+          debugger;
+          console.log(`Dialog result: ${result}`);
+          this.managerData=result;
+      });
+      })
+
+   
+  }
+
 public toggleSetDate(){
-  debugger;
   this.isSetDateEnabled = this.isSetDateEnabled?false:true;
   if(this.isSetDateEnabled){
     this.addProjectModel.Start_Date = new Date();
@@ -39,6 +61,12 @@ public toggleSetDate(){
      this.tmpDate.setDate(this.tmpDate.getDate()+1);
      this.addProjectModel.End_Time = this.tmpDate;
   }
+}
+
+public validateDate(event){
+if(this.addProjectModel.Start_Date>this.addProjectModel.End_Time){
+  console.log("Date wrong");
+}
 }
 
   public getProjects() {
@@ -76,4 +104,30 @@ public toggleSetDate(){
     })
   }
 
+}
+
+
+@Component({
+  selector: 'manager-user-list',
+  templateUrl: 'managerUserList.html',
+})
+export class ManagerUserListDialog {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: AddUserModel[],private dialogRef: MatDialogRef<ManagerUserListDialog>) {
+//     this.data.forEach(data => {
+// data
+//     });
+  }
+  selectedUser:any;
+
+  displayedColumns: string[] = ['User_ID', 'First_Name', 'Last_Name', 'Employee_ID'];
+  
+  dataSource = new MatTableDataSource(this.data);
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  public onSave(element) {    
+    this.dialogRef.close(element.User_ID);
+  }
 }

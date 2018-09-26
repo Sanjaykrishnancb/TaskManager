@@ -43,4 +43,8 @@
 
   .ng-invalid:not(form)  {
     border-left: 5px solid #a94442; /* red */
-  }                 
+  }
+
+  input[name="startDate"],input[name="endDate"],.mat-form-field,.excludeErrorStyle{
+      border-left: none!important;
+  }

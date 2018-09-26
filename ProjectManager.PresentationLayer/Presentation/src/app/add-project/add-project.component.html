@@ -10,49 +10,65 @@
       </div>
     </div>
     <br/>
-    <div class="form_group">      
-      <input type="checkbox" (click)="toggleSetDate()" name="setDate" style="width: 5%; height: 20px;" [(ngModel)]="isSetDateEnabled">
-      <label for="setDate">Set Start and End Date</label>
-      <input type="date" class="form-control" name="startDate" style="display: inline; width: 30%;margin-left: 5px" [disabled]="!isSetDateEnabled" [(ngModel)]="addProjectModel.Start_Date"
-        #startDate="ngModel">
-      <input type="date" class="form-control" name="endDate" style="display: inline; width: 30%;margin-left: 5px" [disabled]="!isSetDateEnabled" [(ngModel)]="addProjectModel.End_Time"
-        #endDate="ngModel">
-      <div [hidden]="startDate.valid || startDate.pristine || !isSetDateEnabled" class="alert alert-danger">
+    <div class="form_group">
+      <!-- <input type="checkbox" (click)="toggleSetDate()" name="setDate" style="width: 5%; height: 20px;" [(ngModel)]="isSetDateEnabled"> -->
+      <!-- <label for="setDate">Set Start and End Date</label> -->
+      <mat-checkbox color="primary" (click)="toggleSetDate()" name="setDate" style="width: 5%; height: 20px;" >Set Start and End Date</mat-checkbox>
+
+      <mat-form-field style="margin-left: 2%">
+        <input matInput [matDatepicker]="picker" [max]="addProjectModel.End_Time" name="startDate" placeholder="Start Date" [disabled]="!isSetDateEnabled" [(ngModel)]="addProjectModel.Start_Date"
+          required #startDate="ngModel">
+        <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="!isSetDateEnabled"></mat-datepicker-toggle>
+        <mat-datepicker (selectedChanged)="validateDate($event)" #picker [disabled]="!isSetDateEnabled"></mat-datepicker>
+      </mat-form-field>
+      <!-- <div [hidden]="startDate.valid || startDate.pristine || !isSetDateEnabled" class="alert alert-danger">
         Start Date is required
-      </div>
-      <div [hidden]="endDate.valid || endDate.pristine || !isSetDateEnabled" class="alert alert-danger">
+      </div> -->
+      <mat-form-field style="margin-left: 2%">
+        <input matInput [matDatepicker]="picker2" name="endDate" placeholder="End Date" [disabled]="!isSetDateEnabled" [(ngModel)]="addProjectModel.End_Time"
+          required #endDate="ngModel">
+        <mat-datepicker-toggle matSuffix [for]="picker2" [disabled]="!isSetDateEnabled"></mat-datepicker-toggle>
+        <mat-datepicker #picker2 (selectedChanged)="validateDate($event)" [disabled]="!isSetDateEnabled"></mat-datepicker>
+      </mat-form-field>
+
+
+      <!-- <input type="date" class="form-control" name="startDate" style="display: inline; width: 30%;margin-left: 5px" [disabled]="!isSetDateEnabled" [(ngModel)]="addProjectModel.Start_Date"
+        #startDate="ngModel"> -->
+      <!-- <input type="date" class="form-control" name="endDate" style="display: inline; width: 30%;margin-left: 5px" [disabled]="!isSetDateEnabled" [(ngModel)]="addProjectModel.End_Time"
+        #endDate="ngModel"> -->
+      <!-- <div [hidden]="startDate.valid || startDate.pristine || !isSetDateEnabled" class="alert alert-danger">
+        Start Date is required
+      </div> -->
+      <!-- <div [hidden]="endDate.valid || endDate.pristine || !isSetDateEnabled" class="alert alert-danger">
         End Date is required
-      </div>
+      </div> -->
     </div>
-     <br/>
+    <br/>
     <div class="form_group">
       <label for="priority">Priority:</label>
-      <input name="priority" type="range" class="form-control" min="0" max="30"  [(ngModel)]="addProjectModel.Priority" required #priority="ngModel">
+      <!-- <input name="priority" type="range" class="form-control" min="0" max="30" [(ngModel)]="addProjectModel.Priority" required
+        #priority="ngModel">
       <p>Value:
         <span>{{addProjectModel.Priority}}</span>
-      </p>
-      <!-- <div class="slidecontainer">
-        <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
-        <p>Value: <span id="demo"></span></p>
-      </div>  -->
-
-
+      </p> -->
+      <mat-slider style="margin-left: 2%;width:30%" class="excludeErrorStyle" name="priority" color="primary" thumbLabel [displayWith]="formatLabel" tickInterval="1000" min="0" max="30" [(ngModel)]="addProjectModel.Priority" required #priority="ngModel"></mat-slider>
     </div>
     <br/>
 
     <div class="form_group">
       <label for="manager" style="display: inline;width: 10%">Manager:</label>
-      <input name="manager" style="display: inline; margin-left: 2%; width: 40%" class="form-control" type="text" [(ngModel)]="managerData" required #manager="ngModel">
-      <button class="form-control" style="display: inline; margin-left: 2%; width: 10%">Search</button>
-      <div [hidden]="manager.valid || manager.pristine || !isSetDateEnabled" class="alert alert-danger">
+      <input name="manager" style="display: inline; margin-left: 2%; width: 40%" class="form-control" type="text" [(ngModel)]="managerData" disabled=true
+        required #manager="ngModel">
+      <button class="form-control" (click)="openDialog()" style="display: inline; margin-left: 2%; width: 10%">Search</button>
+      <div [hidden]="manager.valid || manager.pristine" class="alert alert-danger">
         Manager is required
       </div>
 
     </div>
-<br>
-    <button type="submit" (click)="onSubmit();addProjectForm.reset();" [disabled]="!projectName.valid || !startDate.valid || !endDate.valid || !manager.valid"
+    <br>
+    <button type="submit" (click)="onSubmit();addProjectForm.reset();" [disabled]="!projectName.valid || !endDate.valid || !startDate.valid || !manager.valid"
       class="btn btn-success" [value]="addProjectModel.Project_ID == ''?'Add':'Update'">{{!isUpdate ?'Add':'Update'}}</button>
-    <button (click)="addProjectForm.reset();isUpdate=false;" style="margin-left: 2%" class="btn btn-primary">Reset</button> 
+    <button (click)="addProjectForm.reset();isUpdate=false;" style="margin-left: 2%" class="btn btn-primary">Reset</button>
 
   </form>
   <hr style="border-top: 1px solid #333;" />

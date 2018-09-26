@@ -52,3 +52,8 @@ Forms:
 Template driven
 Reactive forms
 
+Angular Material themes and styles:
+ng add @angular/material
+
+Validate Date using moment.js:
+npm install moment --save
