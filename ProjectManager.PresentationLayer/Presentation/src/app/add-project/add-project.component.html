@@ -57,7 +57,7 @@
 
     <div class="form_group">
       <label for="manager" style="display: inline;width: 10%">Manager:</label>
-      <input name="manager" style="display: inline; margin-left: 2%; width: 40%" class="form-control" type="text" [(ngModel)]="managerData" disabled=true
+      <input name="manager" style="display: inline; margin-left: 2%; width: 40%" class="form-control" type="text" [(ngModel)]="addProjectModel.User_ID" disabled=true
         required #manager="ngModel">
       <button class="form-control" (click)="openDialog()" style="display: inline; margin-left: 2%; width: 10%">Search</button>
       <div [hidden]="manager.valid || manager.pristine" class="alert alert-danger">
@@ -66,7 +66,7 @@
 
     </div>
     <br>
-    <button type="submit" (click)="onSubmit();addProjectForm.reset();" [disabled]="!projectName.valid || !endDate.valid || !startDate.valid || !manager.valid"
+    <button type="submit" (click)="onSubmit();addProjectForm.reset();" [disabled]="!projectName.valid || !endDate.valid || !startDate.valid || !addProjectModel.User_ID"
       class="btn btn-success" [value]="addProjectModel.Project_ID == ''?'Add':'Update'">{{!isUpdate ?'Add':'Update'}}</button>
     <button (click)="addProjectForm.reset();isUpdate=false;" style="margin-left: 2%" class="btn btn-primary">Reset</button>
 

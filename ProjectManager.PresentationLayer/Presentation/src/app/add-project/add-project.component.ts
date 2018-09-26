@@ -46,7 +46,7 @@ export class AddProjectComponent implements OnInit {
         this.dialogRef.afterClosed().subscribe(result => {
           debugger;
           console.log(`Dialog result: ${result}`);
-          this.managerData=result;
+          this.addProjectModel.User_ID=result;
       });
       })
 
@@ -86,6 +86,7 @@ if(this.addProjectModel.Start_Date>this.addProjectModel.End_Time){
       this.getProjects();
       this.addProjectModel.Project_ID = null;
       this.isUpdate = false;
+      this.isSetDateEnabled = false;
     })
   }
 

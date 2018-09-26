@@ -32,7 +32,14 @@ namespace ProjectManager.BusinessLayer
                             Priority=project.Priority
                         };
 
-                        dbContext.Project_Table.Add(projectData);
+                        Project_Table projectCreated = dbContext.Project_Table.Add(projectData);
+                        dbContext.SaveChanges();
+
+                        var userData = dbContext.Users_Table.Where(c => c.User_ID == project.User_ID).First();
+                        if (userData != null)
+                        {
+                            userData.Project_ID = projectCreated.Project_ID;
+                        }
                         dbContext.SaveChanges();
                     }
                     else
@@ -46,6 +53,13 @@ namespace ProjectManager.BusinessLayer
                             projectData.Priority= project.Priority;
                             dbContext.SaveChanges();
                         }
+
+                        var userData = dbContext.Users_Table.Where(c => c.User_ID == project.User_ID).First();
+                        if (userData != null)
+                        {
+                            userData.Project_ID = project.Project_ID;
+                        }
+                        dbContext.SaveChanges();
                     }
                 }
                 catch (Exception e)

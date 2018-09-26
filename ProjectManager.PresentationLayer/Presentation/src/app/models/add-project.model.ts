@@ -4,4 +4,5 @@ export class AddProjectModel{
     Start_Date:Date;
     End_Time:Date;
     Priority:number;
+    User_ID:number;
 }
