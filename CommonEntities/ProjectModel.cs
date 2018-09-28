@@ -13,9 +13,9 @@ namespace CommonEntities
 
         public long Project_ID { get; set; }
         public string Project { get; set; }
-        public System.DateTime Start_Date { get; set; }
-        public System.DateTime End_Time { get; set; }
+        public System.DateTime? Start_Date { get; set; }
+        public System.DateTime? End_Time { get; set; }
         public int Priority { get; set; }
-        public int User_ID { get; set; }
+        public long User_ID { get; set; }
     }
 }

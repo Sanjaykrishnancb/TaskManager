@@ -23,6 +23,7 @@ export class AddProjectComponent implements OnInit {
   managerData:string;
   tmpDate:Date;
   dialogRef:any;
+  searchText:string;
   constructor(private apiService: ApiService,public dialog: MatDialog) {
     this.addProjectModel = new AddProjectModel();
 
@@ -54,12 +55,16 @@ export class AddProjectComponent implements OnInit {
   }
 
 public toggleSetDate(){
-  this.isSetDateEnabled = this.isSetDateEnabled?false:true;
+  //this.isSetDateEnabled = this.isSetDateEnabled?false:true;
   if(this.isSetDateEnabled){
     this.addProjectModel.Start_Date = new Date();
      this.tmpDate  = new Date();
      this.tmpDate.setDate(this.tmpDate.getDate()+1);
      this.addProjectModel.End_Time = this.tmpDate;
+  }
+  else{
+    this.addProjectModel.Start_Date = null;
+    this.addProjectModel.End_Time = null;
   }
 }
 
@@ -90,11 +95,16 @@ if(this.addProjectModel.Start_Date>this.addProjectModel.End_Time){
     })
   }
 
-  editUser(project: AddProjectModel) {
+  editProject(project: AddProjectModel) {
     this.addProjectModel.Project_ID = project.Project_ID;
     this.addProjectModel.Start_Date = project.Start_Date;
     this.addProjectModel.End_Time = project.End_Time;
     this.addProjectModel.Priority = project.Priority;
+    this.addProjectModel.Project  = project.Project;
+    this.addProjectModel.User_ID = project.User_ID;
+    if(project.Start_Date != null){
+      this.isSetDateEnabled = true;
+    }
     this.isUpdate = true;
   }
 

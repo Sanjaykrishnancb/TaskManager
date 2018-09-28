@@ -1,3 +1,65 @@
-<p>
-  add-task works!
-</p>
+<!-- <div class="container">
+  <form #addTaskForm="ngForm">
+
+    <div class="form_group">
+      <label for="projectName">Project :</label>
+      <input name="projectName" style="display: inline-block;width:50%" class="form-control" type="text" [(ngModel)]="addProjectModel.Project"
+        disabled="true" required #projectName="ngModel">
+      <button style="display: inline-block">Search</button>
+      <div [hidden]="projectName.valid || projectName.pristine" class="alert alert-danger">
+        Project Name is required
+      </div>
+    </div>
+    <br/>
+    <div class="form_group">
+      <b style="display: inline-block;width: 10%">Task:</b>
+      <input name="task" style="display: inline-block;width: 50%" required #task="ngModel">
+      <div [hidden]="task.valid || task.pristine" class="alert alert-danger">
+        Task is required
+      </div>
+    </div>
+    <br/>
+    <div class="form_group">
+      <mat-checkbox color="primary" [(ngModel)]="" (change)="toggleSetDate()" name="setDate" style="width: 5%; height: 20px;">Parent Task</mat-checkbox>
+    </div>
+    <br/>
+    <div class="form_group">
+      <b style="display: inline-block;width: 5%">Priority :</b>
+      <mat-slider style="margin-left: 2%;width:30%" class="excludeErrorStyle" name="priority" color="primary" thumbLabel [displayWith]="formatLabel"
+        tickInterval="1000" min="0" max="30" [(ngModel)]="" required #priority="ngModel"></mat-slider>
+    </div>
+    <br>
+    <div class="form_group">
+      <b style="display: inline-block;width: 5%">Parent Task :</b>
+      <input name="parentTask" style="display: inline-block;width: 50%">
+      <button class="form-control">Search</button>
+    </div>
+<div>
+  <b style="display: inline-block;width: 10%">Start Date:</b>
+  <mat-form-field style="margin-left: 2%">
+      <input matInput [matDatepicker]="picker" [max]="addProjectModel.End_Time" name="startDate" placeholder="Choose date"
+        [(ngModel)]="addProjectModel.Start_Date" required #startDate="ngModel">
+      <mat-datepicker-toggle matSuffix [for]="picker" ></mat-datepicker-toggle>
+      <mat-datepicker (selectedChanged)="validateDate($event)" #picker ></mat-datepicker>
+    </mat-form-field>
+    <b style="display: inline-block;width: 10%">End Date:</b>
+    <mat-form-field style="margin-left: 2%">
+        <input matInput [matDatepicker]="picker2" name="endDate" placeholder="End Date" [disabled]="!isSetDateEnabled" [(ngModel)]="addProjectModel.End_Time"
+          required #endDate="ngModel">
+        <mat-datepicker-toggle matSuffix [for]="picker2" [disabled]="!isSetDateEnabled"></mat-datepicker-toggle>
+        <mat-datepicker #picker2 (selectedChanged)="validateDate($event)" [disabled]="!isSetDateEnabled"></mat-datepicker>
+      </mat-form-field>
+</div>
+
+<div>
+  <b style="display: inline-block;width: 5%">User:</b>
+  <input name="user" style="display: inline-block;width: 50%">
+  <button class="form-control">Search</button>
+</div>
+
+    <button type="submit" (click)="onSubmit();addProjectForm.reset();" [disabled]="!projectName.valid || (isSetDateEnabled && (!endDate.valid || !startDate.valid)) || !addProjectModel.User_ID"
+      class="btn btn-success" [value]="addProjectModel.Project_ID == ''?'Add':'Update'">{{!isUpdate ?'Add':'Update'}}</button>
+    <button (click)="addProjectForm.reset();isUpdate=false;" style="margin-left: 2%" class="btn btn-primary">Reset</button>
+
+  </form>
+</div> -->

@@ -48,7 +48,7 @@ addProject (addProjectModel:AddProjectModel): Observable<boolean> {
 
 deleteProject (addProjectModel:AddProjectModel): Observable<boolean> {
   
-  return this.httpClient.post<boolean>(`${this.base_url}/Project/DeleteUser`,JSON.stringify(addProjectModel), this.httpOptions).pipe(
+  return this.httpClient.post<boolean>(`${this.base_url}/Project/DeleteProject`,JSON.stringify(addProjectModel), this.httpOptions).pipe(
     tap((isAdded: boolean) => console.log(`deleted project : ${isAdded}`)),
     catchError(this.handleError<boolean>('DeleteProject'))
   );

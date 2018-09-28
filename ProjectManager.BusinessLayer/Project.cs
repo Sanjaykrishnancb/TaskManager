@@ -26,10 +26,10 @@ namespace ProjectManager.BusinessLayer
                     {
                         Project_Table projectData = new Project_Table()
                         {
-                            Project=project.Project,
-                            Start_Date=project.Start_Date,
-                            End_Time=project.End_Time,
-                            Priority=project.Priority
+                            Project = project.Project,
+                            Start_Date = project.Start_Date == DateTime.MinValue ? null : project.Start_Date,
+                            End_Time = project.End_Time == DateTime.MinValue ? null : project.End_Time,
+                            Priority = project.Priority
                         };
 
                         Project_Table projectCreated = dbContext.Project_Table.Add(projectData);
@@ -48,9 +48,9 @@ namespace ProjectManager.BusinessLayer
                         if (projectData != null)
                         {
                             projectData.Project = project.Project;
-                            projectData.Start_Date = project.Start_Date;
-                            projectData.End_Time= project.End_Time;
-                            projectData.Priority= project.Priority;
+                            projectData.Start_Date = project.Start_Date == DateTime.MinValue ? null : project.Start_Date;
+                            projectData.End_Time = project.End_Time == DateTime.MinValue ? null : project.End_Time;
+                            projectData.Priority = project.Priority;
                             dbContext.SaveChanges();
                         }
 
@@ -78,7 +78,8 @@ namespace ProjectManager.BusinessLayer
                 List<ProjectModel> projects;
                 try
                 {
-                    projects = dbContext.Project_Table.Select(c => new ProjectModel { Project_ID = c.Project_ID, Start_Date = c.Start_Date, End_Time = c.End_Time, Priority=c.Priority,Project=c.Project }).ToList();
+                    projects = dbContext.Project_Table.Select(c => new ProjectModel { Project_ID = c.Project_ID, Start_Date = c.Start_Date, End_Time = c.End_Time, Priority = c.Priority, Project = c.Project,User_ID = dbContext.Users_Table.Where(s=>s.Project_ID == c.Project_ID).Select(s=>s.User_ID).FirstOrDefault() }).ToList();                    
+
                 }
                 catch (Exception e)
                 {
@@ -95,7 +96,10 @@ namespace ProjectManager.BusinessLayer
             {
                 try
                 {
-                    var projectData = new Project_Table { Project_ID=project.Project_ID };
+                    var userData = dbContext.Users_Table.Where(c => c.User_ID == project.User_ID).First();
+                    userData.Project_ID = null;
+                    dbContext.SaveChanges();
+                    var projectData = new Project_Table { Project_ID = project.Project_ID };
                     dbContext.Entry(projectData).State = EntityState.Deleted;
                     dbContext.SaveChanges();
                 }
@@ -105,7 +109,7 @@ namespace ProjectManager.BusinessLayer
                 }
                 return true;
             }
-            
+
         }
     }
 }
