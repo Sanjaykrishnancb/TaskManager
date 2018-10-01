@@ -1,7 +1,7 @@
 USE [ProjectManager]
 GO
 
-/****** Object:  Table [dbo].[Project_Table]    Script Date: 27-09-2018 15:20:14 ******/
+/****** Object:  Table [dbo].[Project_Table]    Script Date: 30-09-2018 01:04:41 ******/
 SET ANSI_NULLS ON
 GO
 

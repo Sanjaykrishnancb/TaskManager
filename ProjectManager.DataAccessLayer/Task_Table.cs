@@ -24,9 +24,9 @@ namespace ProjectManager.DataAccessLayer
         public Nullable<long> Parent_ID { get; set; }
         public Nullable<long> Project_ID { get; set; }
         public string Task { get; set; }
-        public System.DateTime Start_Date { get; set; }
-        public System.DateTime End_Date { get; set; }
-        public int Priority { get; set; }
+        public Nullable<System.DateTime> Start_Date { get; set; }
+        public Nullable<System.DateTime> End_Date { get; set; }
+        public Nullable<int> Priority { get; set; }
         public bool Status { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

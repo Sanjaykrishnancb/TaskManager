@@ -4,6 +4,7 @@ import { AddUserModel } from './models/add-user.model';
 import { observable, Observable, of } from '../../node_modules/rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
 import { AddProjectModel } from './models/add-project.model';
+import { AddTaskModel } from './models/add-task.model';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +53,18 @@ deleteProject (addProjectModel:AddProjectModel): Observable<boolean> {
     tap((isAdded: boolean) => console.log(`deleted project : ${isAdded}`)),
     catchError(this.handleError<boolean>('DeleteProject'))
   );
+}
+
+addTask (addProjectModel:AddTaskModel): Observable<boolean> {
+  
+  return this.httpClient.post<boolean>(`${this.base_url}/Task/AddTask`,JSON.stringify(addProjectModel), this.httpOptions).pipe(
+    tap((isAdded: boolean) => console.log(`added task : ${isAdded}`)),
+    catchError(this.handleError<boolean>('addTask'))
+  );
+}
+
+getParentTasks():Observable<AddTaskModel[]>{
+  return  this.httpClient.get<AddTaskModel[]>(`${this.base_url}/Task/GetParentTasks`);
 }
 
 /**

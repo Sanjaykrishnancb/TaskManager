@@ -1,7 +1,7 @@
 USE [ProjectManager]
 GO
 
-/****** Object:  Table [dbo].[Users_Table]    Script Date: 27-09-2018 15:19:08 ******/
+/****** Object:  Table [dbo].[Users_Table]    Script Date: 30-09-2018 01:08:57 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -24,6 +24,14 @@ GO
 
 ALTER TABLE [dbo].[Users_Table]  WITH CHECK ADD FOREIGN KEY([Project_ID])
 REFERENCES [dbo].[Project_Table] ([Project_ID])
+GO
+
+ALTER TABLE [dbo].[Users_Table]  WITH CHECK ADD FOREIGN KEY([Project_ID])
+REFERENCES [dbo].[Project_Table] ([Project_ID])
+GO
+
+ALTER TABLE [dbo].[Users_Table]  WITH CHECK ADD FOREIGN KEY([Task_ID])
+REFERENCES [dbo].[Task_Table] ([Task_ID])
 GO
 
 ALTER TABLE [dbo].[Users_Table]  WITH CHECK ADD FOREIGN KEY([Task_ID])

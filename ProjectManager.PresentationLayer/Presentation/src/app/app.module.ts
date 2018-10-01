@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AddProjectComponent } from './add-project/add-project.component';
-import { AddTaskComponent } from './add-task/add-task.component';
+import { AddTaskComponent, ProjectListDialog, ManagerTaskListDialog } from './add-task/add-task.component';
 import { AddUserComponent } from './add-user/add-user.component';
 import { ViewTaskComponent } from './view-task/view-task.component';
 import { ManagerUserListDialog } from "./add-project/add-project.component"
@@ -71,9 +71,11 @@ const routes: Routes = [
     AddUserComponent,
     ViewTaskComponent,
     FilterPipe,
-    ManagerUserListDialog
+    ManagerUserListDialog,
+    ProjectListDialog,
+    ManagerTaskListDialog
   ],
-  entryComponents:[ManagerUserListDialog],
+  entryComponents:[ManagerUserListDialog,ProjectListDialog,ManagerTaskListDialog],
   exports: [RouterModule,
     MatAutocompleteModule,
     MatBadgeModule,

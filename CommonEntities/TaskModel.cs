@@ -17,10 +17,13 @@ namespace CommonEntities
         public long? Parent_ID { get; set; }
         public long? Project_ID { get; set; }
         public string Task { get; set; }
-        public System.DateTime Start_Date { get; set; }
-        public System.DateTime End_Date { get; set; }
-        public int Priority { get; set; }
+        public System.DateTime? Start_Date { get; set; }
+        public System.DateTime? End_Date { get; set; }
+        public int? Priority { get; set; }
         public bool Status { get; set; }
-        
+        public long User_ID { get; set; }
+        public bool isParentTask { get; set; }
+        public string ParentTaskTitle { get; set; }
+
     }
 }
