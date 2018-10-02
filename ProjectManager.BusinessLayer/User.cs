@@ -1,4 +1,5 @@
 ﻿using CommonEntities;
+using CommonEntities.Interfaces;
 using ProjectManager.DataAccessLayer;
 using System;
 using System.Collections.Generic;
@@ -9,17 +10,23 @@ using System.Threading.Tasks;
 
 namespace ProjectManager.BusinessLayer
 {
-    public class User
+    public class User: IUserBusiness
     {
+        private readonly ProjectManagerEntities dbContext = null;
         public User()
         {
+            dbContext = new ProjectManagerEntities();
+        }
 
+        public User(ProjectManagerEntities dbContextData)
+        {
+            dbContext = dbContextData;
         }
 
         public bool AddUser(UsersModel user)
         {
-            using (ProjectManagerEntities dbContext = new ProjectManagerEntities())
-            {
+            //using (ProjectManagerEntities dbContext = new ProjectManagerEntities())
+            //{
                 try
                 {
                     if (user.User_ID == 0)
@@ -51,14 +58,14 @@ namespace ProjectManager.BusinessLayer
                     return false;
                 }
                 return true;
-            }
+           // }
 
         }
 
         public List<UsersModel> GetUsers()
         {
-            using (ProjectManagerEntities dbContext = new ProjectManagerEntities())
-            {
+            //using (ProjectManagerEntities dbContext = new ProjectManagerEntities())
+            //{
                 List<UsersModel> users;
                 try
                 {
@@ -69,14 +76,14 @@ namespace ProjectManager.BusinessLayer
                     return new List<UsersModel>();
                 }
                 return users;
-            }
+            //}
 
         }
 
         public bool DeleteUser(UsersModel user)
         {
-            using (ProjectManagerEntities dbContext = new ProjectManagerEntities())
-            {
+            //using (ProjectManagerEntities dbContext = new ProjectManagerEntities())
+            //{
                 try
                 {
                     var userData = new Users_Table { User_ID = user.User_ID };
@@ -90,6 +97,6 @@ namespace ProjectManager.BusinessLayer
                 return true;
             }
             
-        }
+        //}
     }
 }

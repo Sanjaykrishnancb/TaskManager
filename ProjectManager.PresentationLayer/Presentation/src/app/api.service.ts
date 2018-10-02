@@ -10,7 +10,7 @@ import { AddTaskModel } from './models/add-task.model';
   providedIn: 'root'
 })
 export class ApiService {
-base_url="http://localhost:51418";
+base_url="http://localhost/ProjectManagerService";
 httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };

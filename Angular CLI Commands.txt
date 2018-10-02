@@ -57,3 +57,6 @@ ng add @angular/material
 
 Validate Date using moment.js:
 npm install moment --save
+
+
+ng build --prod
