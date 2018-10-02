@@ -39,7 +39,7 @@ export class AddProjectComponent implements OnInit {
 
   openDialog() {
 
-      this.apiService.getUsers().subscribe((data:AddUserModel[])=>{
+      this.apiService.getUsers("").subscribe((data:AddUserModel[])=>{
         debugger;
         this.dialogRef = this.dialog.open(ManagerUserListDialog, {      
           data: data

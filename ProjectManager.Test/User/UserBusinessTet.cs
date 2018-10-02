@@ -22,7 +22,7 @@ namespace ProjectManager.Test.Service
         {
             Mock<ProjectManagerEntities> mockContext = MockDataSetList();
             var UserBL = new User(mockContext.Object);
-            List<UsersModel> users = UserBL.GetUsers();
+            List<UsersModel> users = UserBL.GetUsers("FirstName");
             Assert.IsNotNull(users);
             foreach (var user in users)
             {

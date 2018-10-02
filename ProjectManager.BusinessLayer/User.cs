@@ -62,21 +62,33 @@ namespace ProjectManager.BusinessLayer
 
         }
 
-        public List<UsersModel> GetUsers()
+        public List<UsersModel> GetUsers(string soringParameter)
         {
-            //using (ProjectManagerEntities dbContext = new ProjectManagerEntities())
-            //{
+          
                 List<UsersModel> users;
+                var result = new List<UsersModel>();
                 try
                 {
                     users = dbContext.Users_Table.Select(c => new UsersModel { User_ID = c.User_ID, First_Name = c.First_Name, Last_Name = c.Last_Name, Employee_ID = c.Employee_ID }).ToList();
+
+                    if (String.IsNullOrEmpty(soringParameter) || soringParameter == "Id")
+                    {
+                        result = users.OrderBy(u => u.Employee_ID).ToList();
+                    }
+                    else if (soringParameter == "fName")
+                    {
+                        result = users.OrderBy(u => u.First_Name).ToList();
+                    }
+                    else if (soringParameter == "lName")
+                    {
+                        result = users.OrderBy(u => u.Last_Name).ToList();
+                    }
                 }
                 catch (Exception e)
                 {
                     return new List<UsersModel>();
                 }
-                return users;
-            //}
+                return result;
 
         }
 

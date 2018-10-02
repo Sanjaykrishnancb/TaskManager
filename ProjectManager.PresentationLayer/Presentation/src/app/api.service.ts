@@ -15,8 +15,8 @@ httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
   constructor(private  httpClient:  HttpClient) { }
-  getUsers():Observable<AddUserModel[]>{
-    return  this.httpClient.get<AddUserModel[]>(`${this.base_url}/User/GetUsers`);
+  getUsers(soringParameter :string):Observable<AddUserModel[]>{
+    return  this.httpClient.get<AddUserModel[]>(`${this.base_url}/User/GetUsers?soringParameter=`+soringParameter);
 }
 
 addUser (addUserModel:AddUserModel): Observable<boolean> {
@@ -65,6 +65,17 @@ addTask (addProjectModel:AddTaskModel): Observable<boolean> {
 
 getParentTasks():Observable<AddTaskModel[]>{
   return  this.httpClient.get<AddTaskModel[]>(`${this.base_url}/Task/GetParentTasks`);
+}
+
+getTasks(sortingParameter:string):Observable<AddTaskModel[]>{
+  return this.httpClient.get<AddTaskModel[]>(`${this.base_url}/Task/GetTasks?sortingParameter=`+sortingParameter);
+}
+
+endTask(task:AddTaskModel):Observable<boolean>{
+  return this.httpClient.post<boolean>(`${this.base_url}/Task/EndTask`,JSON.stringify(task), this.httpOptions).pipe(
+    tap((isDeleted: boolean) => console.log(`deleted task : ${isDeleted}`)),
+    catchError(this.handleError<boolean>('EndTask'))
+  );
 }
 
 /**

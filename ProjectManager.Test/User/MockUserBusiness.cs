@@ -20,7 +20,7 @@ namespace ProjectManager.Test.Service
         {
             return true;
         }
-        public List<UsersModel> GetUsers()
+        public List<UsersModel> GetUsers(string sortingParameter)
         {
             return new List<UsersModel>() { new UsersModel { Employee_ID = "1", First_Name = "qw", Last_Name = "yt" }, new UsersModel { Employee_ID = "2", First_Name = "hs", Last_Name = "gh" } };
 

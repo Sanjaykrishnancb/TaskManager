@@ -85,7 +85,7 @@ export class AddTaskComponent implements OnInit {
 
   openUsersDialog() {
 
-    this.apiService.getUsers().subscribe((data: AddUserModel[]) => {
+    this.apiService.getUsers("").subscribe((data: AddUserModel[]) => {
       debugger;
       this.dialogRef = this.dialog.open(ManagerUserListDialog, {
         data: data
@@ -105,7 +105,7 @@ export class AddTaskComponent implements OnInit {
         data: data
       });
       this.dialogRef.afterClosed().subscribe(result => {
-        debugger;
+       
         console.log(`Dialog result: ${result}`);
         this.addTaskModel.Parent_ID  = result;
       });

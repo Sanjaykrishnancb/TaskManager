@@ -38,6 +38,20 @@ namespace ProjectManager.Service.Controllers
             return p1.AddTask(Task);
         }
 
+        [Route("GetTasks/{sortingParameter?}")]
+        [HttpGet]
+        public List<TaskModel> getTasks(string sortingParameter)
+        {
+            return p1.getTasks(sortingParameter);
+        }
+
+        [Route("EndTask")]
+        [HttpPost]
+        public Boolean endTask(TaskModel Task)
+        {
+            return p1.endTask(Task);
+        }
+
         //[Route("DeleteUser")]
         //[HttpPost]
         //public bool DeleteUser(UsersModel user)

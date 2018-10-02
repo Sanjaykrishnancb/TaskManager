@@ -22,26 +22,29 @@ namespace ProjectManager.BusinessLayer
             {
                 try
                 {
-                    if (Task.Task_ID == 0)
+                    if (Task.isParentTask)
                     {
                         Parent_Task_Table parentTableData = new Parent_Task_Table();
-                        if (Task.isParentTask)
+                        Parent_Task_Table parentTable = new Parent_Task_Table
                         {
-                            Parent_Task_Table parentTable = new Parent_Task_Table
-                            {
-                                Parent_Task = Task.ParentTaskTitle
-                            };
-                            parentTableData = dbContext.Parent_Task_Table.Add(parentTable);
-                            dbContext.SaveChanges();
-                        }
+                            Parent_Task = Task.ParentTaskTitle
+                        };
+                        parentTableData = dbContext.Parent_Task_Table.Add(parentTable);
+                        dbContext.SaveChanges();
+                    }
+                    else if (Task.Task_ID == 0)
+                    {
+                        Parent_Task_Table parentTableData = new Parent_Task_Table();
+
                         Task_Table taskData = new Task_Table
                         {
                             Project_ID = Task.Project_ID,
                             Task = Task.Task,
                             Start_Date = Task.isParentTask ? null : Task.Start_Date,
                             End_Date = Task.isParentTask ? null : Task.End_Date,
-                            Priority = Task.isParentTask ? null : Task.Priority,
-                            Parent_ID = Task.isParentTask ? parentTableData.Parent_ID : Task.Parent_ID
+                            Priority = Task.isParentTask ? null : (Task.Priority == null ? 0 : Task.Priority),
+                            Parent_ID = Task.isParentTask ? parentTableData.Parent_ID : Task.Parent_ID,
+                            Status = true
                         };
 
                         var taskAdded = dbContext.Task_Table.Add(taskData);
@@ -65,8 +68,9 @@ namespace ProjectManager.BusinessLayer
                             taskData.Task = Task.Task;
                             taskData.Start_Date = Task.isParentTask ? null : Task.Start_Date;
                             taskData.End_Date = Task.isParentTask ? null : Task.End_Date;
-                            taskData.Priority = Task.isParentTask ? null : Task.Priority;
+                            taskData.Priority = Task.isParentTask ? null : (Task.Priority == null ? 0 : Task.Priority);
                             taskData.Parent_ID = Task.isParentTask ? null : Task.Parent_ID;
+                            taskData.Status = true;
                             dbContext.SaveChanges();
 
                             var userData = dbContext.Users_Table.Where(c => c.User_ID == Task.User_ID).FirstOrDefault();
@@ -95,7 +99,7 @@ namespace ProjectManager.BusinessLayer
                 List<TaskModel> task;
                 try
                 {
-                    task = dbContext.Task_Table.Where(c => c.Parent_ID != null).Select(c => new TaskModel { Parent_ID = (int)(dbContext.Parent_Task_Table.Where(s => s.Parent_ID == c.Parent_ID).Select(s => s.Parent_ID).FirstOrDefault()), ParentTaskTitle = (dbContext.Parent_Task_Table.Where(s => s.Parent_ID == c.Parent_ID).Select(s => s.Parent_Task).FirstOrDefault()), Task = c.Task }).ToList();
+                    task = dbContext.Parent_Task_Table.Select(s => new TaskModel { Parent_ID = s.Parent_ID, ParentTaskTitle = s.Parent_Task }).ToList();
                 }
                 catch (Exception e)
                 {
@@ -105,7 +109,59 @@ namespace ProjectManager.BusinessLayer
             }
 
         }
+        public List<TaskModel> getTasks(string sortingParameter)
+        {
+            List<TaskModel> tasks;
+            using (ProjectManagerEntities dbContext = new ProjectManagerEntities())
+            {
 
+
+                try
+                {
+                    tasks = dbContext.Task_Table.Where(c => c.Parent_ID == null).Select(s => new TaskModel { Task = s.Task, Project_ID = s.Project_ID, ParentTaskTitle = "", Priority = s.Priority, Start_Date = s.Start_Date, End_Date = s.End_Date, Task_ID = s.Task_ID, Status = s.Status }).ToList();
+                    tasks.AddRange(dbContext.Task_Table.Where(c => c.Parent_ID != null).Join(dbContext.Parent_Task_Table, f => f.Parent_ID, s => s.Parent_ID, (f, s) => new TaskModel { Task = f.Task, Project_ID = f.Project_ID, ParentTaskTitle = s.Parent_Task, Priority = f.Priority, Start_Date = f.Start_Date, End_Date = f.End_Date, Parent_ID = s.Parent_ID, Task_ID = f.Task_ID, Status = f.Status }).ToList());
+                    if (String.IsNullOrEmpty(sortingParameter) || sortingParameter == "sDate")
+                    {
+                        tasks = tasks.OrderBy(o => o.Start_Date).ToList();
+                    }
+                    else if (sortingParameter == "eDate")
+                    {
+                        tasks = tasks.OrderBy(o => o.End_Date).ToList();
+                    }
+                    else if (sortingParameter == "priority")
+                    {
+                        tasks = tasks.OrderBy(o => o.Priority).ToList();
+                    }
+                    else if (sortingParameter == "completed")
+                    {
+                        tasks = tasks.OrderBy(o => o.Status).ToList();
+                    }
+                }
+                catch (Exception e)
+                {
+                    return new List<TaskModel>();
+                }
+            }
+            return tasks;
+        }
+
+        public Boolean endTask(TaskModel Task)
+        {
+            using (ProjectManagerEntities dbContext = new ProjectManagerEntities())
+            {
+                try
+                {
+                    var result = dbContext.Task_Table.Where(c => c.Task_ID == Task.Task_ID).FirstOrDefault();
+                    result.Status = false;
+                    dbContext.SaveChanges();
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
         //public List<UsersModel> GetUsers()
         //{
         //    using (ProjectManagerEntities dbContext = new ProjectManagerEntities())

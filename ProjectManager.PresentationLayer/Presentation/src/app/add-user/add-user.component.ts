@@ -20,11 +20,11 @@ export class AddUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getUsers();
+    this.getUsers("");
   }
 
-public getUsers(){
-  this.apiService.getUsers().subscribe((data:AddUserModel[])=>{
+public getUsers(soringParameter: string){
+  this.apiService.getUsers(soringParameter).subscribe((data:AddUserModel[])=>{
     this.UserModel = data;
     console.log(data);
     this.usersListCount = data.length;
@@ -36,7 +36,7 @@ public getUsers(){
   onSubmit() { 
     this.apiService.addUser(this.addUserModel).subscribe((data:boolean)=>{
       console.log("component :"+data);
-      this.getUsers();
+      this.getUsers("");
       this.addUserModel.User_ID=null;
       this.isUpdate = false;
     })
@@ -53,7 +53,7 @@ public getUsers(){
    public deleteUser(user:AddUserModel){
     this.apiService.deleteUser(user).subscribe((data:boolean)=>{      
       console.log(data);
-      this.getUsers();
+      this.getUsers("");
     })
   }
 

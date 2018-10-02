@@ -16,7 +16,7 @@ namespace ProjectManager.Test
         {
             UserController user = new UserController(new MockUserBusiness());
 
-            List<UsersModel> userData = user.GetUsers();
+            List<UsersModel> userData = user.GetUsers("FirstName");
 
             foreach (var x in userData)
             {

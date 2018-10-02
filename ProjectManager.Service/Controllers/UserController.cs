@@ -23,12 +23,11 @@ namespace ProjectManager.Service.Controllers
         {
             p1 = user;
         }
-
-        [Route("GetUsers")]
+        [Route("GetUsers/{soringParameter?}")]
         [HttpGet]
-        public List<UsersModel> GetUsers()
+        public List<UsersModel> GetUsers(string soringParameter)
         {
-            return p1.GetUsers();
+            return p1.GetUsers(soringParameter);
         }
 
         [Route("AddUser")]
