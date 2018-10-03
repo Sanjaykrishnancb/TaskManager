@@ -24,18 +24,18 @@ namespace ProjectManager.Service.Controllers
             p1 = project;
         }
 
-        [Route("GetProjects")]
+        [Route("GetProjects/{sortParameter?}")]
         [HttpGet]
-        public List<ProjectModel> GetProject()
+        public List<ProjectModel> GetProject(string sortParameter)
         {
-            return p1.GetProject();
+            return p1.GetProject(sortParameter);
         }
 
         [Route("AddProject")]
         [HttpPost]
         public bool AddProject(ProjectModel project)
-        {            
-            return p1.AddProject(project);            
+        {
+            return p1.AddProject(project);
         }
 
         [Route("DeleteProject")]
