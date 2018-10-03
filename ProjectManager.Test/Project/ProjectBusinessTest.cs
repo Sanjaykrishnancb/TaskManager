@@ -60,7 +60,7 @@ namespace ProjectManager.Test.Service
             {
                 Project = "P5"
             };
-            Assert.IsTrue(projectBL.DeleteProject(data));
+            Assert.IsFalse(projectBL.DeleteProject(data));
         }
 
         private static Mock<ProjectManagerEntities> MockDataSetList()

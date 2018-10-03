@@ -92,7 +92,7 @@ namespace ProjectManager.Test.Service
                 End_Date = DateTime.Now,
                 Priority = 26
             };
-            Assert.IsTrue(taskBL.endTask(data));
+            Assert.IsFalse(taskBL.endTask(data));
         }
 
         private static Mock<ProjectManagerEntities> MockDataSetList()

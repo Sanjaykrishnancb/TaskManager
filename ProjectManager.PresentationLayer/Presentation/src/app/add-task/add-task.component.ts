@@ -72,6 +72,7 @@ export class AddTaskComponent implements OnInit {
       this.addTaskModel.Project_ID = null;
       this.addTaskModel.User_ID = null;
       this.isUpdate = false;
+      this.pageHeader = "Add Task";
       this.addTaskModel.isParentTask = false;
       this.addTaskModel.Start_Date = new Date();
       var tmp = new Date();
