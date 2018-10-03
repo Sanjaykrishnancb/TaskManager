@@ -5,12 +5,13 @@
     <a class="navbar-brand" href="/">Project Manager</a>
     <div class="navbar-expand mr-auto">
       <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="#">Home</a>
-        <a class="nav-item nav-link" href="#">About</a>
-        <a class="nav-item nav-link" href="#">Contact</a>
+        <a routerLink="/AddProject"  class="nav-item nav-link">Add Project</a>
+        <a routerLink="/AddTask" class="nav-item nav-link">Add Task</a>
+        <a routerLink="/AddUser" class="nav-item nav-link">Add User</a>
+        <a routerLink="/ViewTask" class="nav-item nav-link">View Task</a>
       </div>
     </div>
-    <div class="navbar-expand ml-auto navbar-nav">
+    <!-- <div class="navbar-expand ml-auto navbar-nav">
       <div class="navbar-nav">
         <a class="nav-item nav-link" href="https://github.com/beeman" target="_blank">
           <i class="fa fa-github"></i>
@@ -22,12 +23,12 @@
           <i class="fa fa-medium"></i>
         </a>
       </div>
-    </div>
+    </div> -->
   </nav>
 
 <div style="text-align:left;position:absolute; left:20px; right:20px; top:100px; bottom: 100px; overflow:auto;">    
 
-  <h1>
+  <!-- <h1>
     Project Manager
   </h1>
 
@@ -36,7 +37,7 @@
     <a routerLink="/AddTask" style="margin-left: 2%">Add Task</a>
     <a routerLink="/AddUser" style="margin-left: 2%">Add User</a>
     <a routerLink="/ViewTask" style="margin-left: 2%">View Task</a>
-  </div>
+  </div> -->
   <router-outlet></router-outlet>
 
 </div>
